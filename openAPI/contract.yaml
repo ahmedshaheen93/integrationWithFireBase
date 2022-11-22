@@ -75,6 +75,9 @@ components:
           type: string
         message:
           type: string
+        lastModifedTime:
+          type: string
+          format: dateTime
     MessageRequest:
       type: object
       required:
