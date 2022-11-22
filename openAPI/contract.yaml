@@ -1,0 +1,104 @@
+openapi: "3.0.1"
+info:
+  title: integration with firebase demo
+  version: 1.0.0
+  description: This sample project is a demo for how to integrate with firebase.
+tags:
+  - name: message
+paths:
+  /messages:
+    get:
+      summary: List all messages
+      operationId: listAllMessages
+      tags:
+        - message
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessagesResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+    post:
+      summary: create message
+      operationId: addMessage
+      tags:
+        - message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageRequest'
+
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+
+
+components:
+  schemas:
+    MessagesResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/MessageResponse'
+      example:
+        - name: Ahmed
+          message: hello world
+
+    MessageResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+    MessageRequest:
+      type: object
+      required:
+        - name
+        - message
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+    ErrorDetails:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        date:
+          type: string
+          format: datetime
+        status:
+          type: string
+        error:
+          type: string
+        uri:
+          type: string
+        message:
+          type: string
